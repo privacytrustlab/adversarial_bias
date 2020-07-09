@@ -18,7 +18,7 @@ We design and implement data poisoning attack algorithms (algorithm1 and algorit
      - `source ~/env/(name)/bin/activate` # activate the environment
      - `pip install -r requirements.txt `
 	 
-- Note: For reproducibility, we include [fairlearn repo]((https://github.com/fairlearn/fairlearn) (Microsoft, v0.3.0).
+- Note: For reproducibility, we include [fairlearn repo](https://github.com/fairlearn/fairlearn) (Microsoft, v0.3.0).
 
 ##### Datasets
 
