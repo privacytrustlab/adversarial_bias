@@ -1,6 +1,6 @@
 
 ### On Adversarial Bias and the Robustness of Fair Machine Learning
-This repo provides the code for [our paper]([https://arxiv.org/abs/2006.08669](https://arxiv.org/abs/2006.08669)) "On Adversarial Bias and the Robustness of Fair Machine Learning".
+This repo provides the code for [our paper](https://arxiv.org/abs/2006.08669) "On Adversarial Bias and the Robustness of Fair Machine Learning".
 
 We design and implement data poisoning attack algorithms (algorithm1 and algorithm2) against machine learning models trained with equalized odds as the fairness constraint. We assume the attacker who can control the sampling process and (in the stronger case, also) the labeling process for some of the training data. 
 
@@ -18,7 +18,7 @@ We design and implement data poisoning attack algorithms (algorithm1 and algorit
      - `source ~/env/(name)/bin/activate` # activate the environment
      - `pip install -r requirements.txt `
 	 
-- Note: For reproducibility, we include [fairlearn repo]([https://github.com/fairlearn/fairlearn](https://github.com/fairlearn/fairlearn)) (Microsoft, v0.3.0).
+- Note: For reproducibility, we include [fairlearn repo]((https://github.com/fairlearn/fairlearn) (Microsoft, v0.3.0).
 
 ##### Datasets
 
