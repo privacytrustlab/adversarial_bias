@@ -2,7 +2,7 @@
 ### On Adversarial Bias and the Robustness of Fair Machine Learning
 This repo provides the code for [our paper](https://arxiv.org/abs/2006.08669) "On Adversarial Bias and the Robustness of Fair Machine Learning".
 
-We design and implement data poisoning attack algorithms (algorithm1 and algorithm2) against machine learning models trained with equalized odds as the fairness constraint. We assume the attacker who can control the sampling process and (in the stronger case, also) the labeling process for some of the training data. 
+We design and implement data poisoning attack algorithms (algorithm1 and algorithm2) against machine learning models trained with equalized odds as the fairness constraint to reduce the overall test accuracy. We assume the attacker who can control the sampling process and (in the stronger case, also) the labeling process for some of the training data. Using these algorithms, we show that in presence of adversarial bias, fairness of machine learning models can be in conflict with robustness.
 
 ##### Set up
 
