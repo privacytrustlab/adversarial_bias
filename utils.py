@@ -19,7 +19,7 @@ def generate_dataset(X, Y, G, kernel, clean_ratio, attacker_split, test_split, r
 
     n_clean = int(clean_ratio*Y.shape[0])
     n_attacker = int(n_clean*attacker_split)
-    
+
     if kernel == 'linear':
         model = LinearSVC(max_iter=5000)
     else:
@@ -78,12 +78,12 @@ def EO(s, y_pred, y_true):
     y_pred_1_0 = [(1-y_pred[i]) for i in range(len(s)) if y_true[i] == 0 and s[i] == 1]
     y_pred_0_1 = [y_pred[i] for i in range(len(s)) if y_true[i] == 1 and s[i] == 0]
     y_pred_1_1 = [y_pred[i] for i in range(len(s)) if y_true[i] == 1 and s[i] == 1]
-    
+
     loss_0_0 = np.mean(y_pred_0_0)
     loss_1_0 = np.mean(y_pred_1_0)
     loss_0_1 = np.mean(y_pred_0_1)
     loss_1_1 = np.mean(y_pred_1_1)
-    
+
     return abs(loss_0_0 - loss_1_0), abs(loss_0_1 - loss_1_1)
 
 # functions
@@ -95,7 +95,7 @@ def cross_entropy(y, t, tol=1e-12):
 
 # evaluate penalized loss
 def eval_loss(A, b, x, y, g, x_reg, y_reg, g_reg, L, num_points):
-    
+
     s = 1 - (np.dot(x, A) + b) * (2*y-1)
     loss = s*(s>=0)
 
@@ -107,30 +107,40 @@ def eval_loss(A, b, x, y, g, x_reg, y_reg, g_reg, L, num_points):
     idx10 = np.logical_and(g_reg.flatten()==1, y_reg.flatten()==0)
     idx11 = np.logical_and(g_reg.flatten()==1, y_reg.flatten()==1)
 
-    s00 = np.sum(loss2_reg[idx00])
-    s01 = np.sum(loss2_reg[idx01])
-    s10 = np.sum(loss2_reg[idx10])
-    s11 = np.sum(loss2_reg[idx11])
+    _s00 = np.sum(loss2_reg[idx00])
+    _s01 = np.sum(loss2_reg[idx01])
+    _s10 = np.sum(loss2_reg[idx10])
+    _s11 = np.sum(loss2_reg[idx11])
 
-    c00 = np.sum(idx00)
-    c01 = np.sum(idx01)
-    c10 = np.sum(idx10)
-    c11 = np.sum(idx11)
+    _c00 = np.sum(idx00)
+    _c01 = np.sum(idx01)
+    _c10 = np.sum(idx10)
+    _c11 = np.sum(idx11)
 
 
     for i in range(len(loss)):
+        s00 = _s00
+        s01 = _s01
+        s10 = _s10
+        s11 = _s11
+
+        c00 = _c00
+        c01 = _c01
+        c10 = _c10
+        c11 = _c11
+
         if g[i][0]==0 and y[i][0]==0:
-            s00 += num_points*loss2[i][0]
-            c00 += num_points
+            s00 = _s00 + num_points*loss2[i][0]
+            c00 = _c00 + num_points
         elif g[i][0]==0 and y[i][0]==1:
-            s01 += num_points*loss2[i][0]
-            c01 += num_points
+            s01 = _s01 + num_points*loss2[i][0]
+            c01 = _c01 + num_points
         elif g[i][0]==1 and y[i][0]==0:
-            s10 += num_points*loss2[i][0]
-            c10 += num_points
+            s10 = _s10 + num_points*loss2[i][0]
+            c10 = _c10 + num_points
         elif g[i][0]==1 and y[i][0]==1:
-            s11 += num_points*loss2[i][0]
-            c11 += num_points
+            s11 = _s11 +num_points*loss2[i][0]
+            c11 = _c11 + num_points
         reg = L*np.abs(s00/c00-s10/c10) + L*np.abs(s01/c01-s11/c11)
         loss[i][0] += reg
     return loss
@@ -176,4 +186,3 @@ def gradient(A, b, x_loss, y_loss, x_reg, y_reg, g_reg, L, r, n, num_points):
         'dA': ((dfA_loss+num_points*dfA_reg_0+num_points*dfA_reg_1)/n+r*dA_reg).reshape((-1,1)) ,
         'db': (dfb_loss+num_points*dfb_reg_0+num_points*dfb_reg_1)/n#+r*db_reg
     }
-
